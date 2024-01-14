@@ -1,0 +1,18 @@
+INPUTS:
+
+No. of storey='a'
+Live load='p' (Units in kN/m^2)
+centre to centre distance of columns in x-axis='d1' (Units in metres)
+centre to centre distance of columns in y-axis='d2' ((Units in metres)
+height of each floor='h1' ((Units in meters)
+total length of plan in x-axis='l1' (Units in meters)
+total length of plan in y-axis='l2' (Units in meters)
+width of column='c1' (Units in meters)
+depth of column='c2' (Units in meters)
+width of beam='b1' (Units in meters)
+depth of beam='b2' (Units in meters)
+slab thickness='s' (Units in meters)
+wall thickness='w' (Units in meters)
+No. of columns:'n1'
+No. of beams in x-axis:'n2'
+No. of beams in y-axis:'n3'

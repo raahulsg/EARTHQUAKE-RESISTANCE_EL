@@ -1,0 +1,36 @@
+the formulae are as follows; follow Indian Standard code of practice
+FOR Slab weight= (area of slab)*(characteristic strength of concrete)*(thickness of slab)
+
+
+FOR Column Weight=(area of column)*(characteristic strength of concrete)*(No. of columns)*(height of each floor)
+
+
+FOR Beam Weight:
+Beams in x-axis=(area of beam)*(characteristic strength of concrete)*(No. of beams)*(total length of plan in x-axis)
+Beams in y-axis=(area of beam)*(characteristic strength of concrete)*(No. of beams)*(total length of plan in y-axis)
+Total Beam Weight= [(Beams in x-axis) + (Beams in y-axis)]
+
+
+FOR Wall Weight:
+Wall in x-axis=(wall thickness*length of plan in x-axis*height of each floor)*(characteristic strength of masonry brick)
+Wall in y-axis=(wall thickness*length of plan in y-axis*height of each floor)*(characteristic strength of masonry brick)
+Total Wall Weight= (Wall in x-axis) + (Wall in y-axis)
+
+
+FOR Live load=(0.25)*(Given input of Live load)*(Total area of slab);
+
+
+LOAD ON EACH FLOOR=(Slab weight)+(Beam Weight)+(Column Weight)+(Wall Weight)+(Live Load Weight);
+
+
+LOAD ON ROOF SLAB=(Slab Weight)+(Beam Weight)+(Column Weight/2)+(Wall Weight/2);
+
+
+TOTAL Weight=[LOAD ON EACH FLOOR*(No. of floors - 1)]+[LOAD ON ROOF SLAB].
+
+
+
+Use the following standard values:
+characteristic strength of concrete=25kN/m^2, characteristic strength of masonry brick=20kN/m^2.
+For length of wall: multiply the dimension centre to centre distance between two columns and height of each floor.
+For beam area: eliminate the area of beam present within the slab by multiplying the width of beam with the difference of depth of beam and slab thickness. 

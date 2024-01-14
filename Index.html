@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structural Design Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Structural Design Calculator</h2>
+
+<form id="structuralForm">
+    <label for="numStorey">Number of Stories:</label>
+    <input type="number" id="numStorey" required>
+
+    <label for="liveLoad">Live Load (kN/m²):</label>
+    <input type="number" id="liveLoad" required>
+
+    <label for="d1">Column Distance in X-axis (m):</label>
+    <input type="number" id="d1" required>
+
+    <label for="d2">Column Distance in Y-axis (m):</label>
+    <input type="number" id="d2" required>
+
+    <label for="h1">Height of Each Floor (m):</label>
+    <input type="number" id="h1" required>
+
+    <label for="l1">Total Length of Plan in X-axis (m):</label>
+    <input type="number" id="l1" required>
+
+    <label for="l2">Total Length of Plan in Y-axis (m):</label>
+    <input type="number" id="l2" required>
+
+    <label for="c1">Column Width (m):</label>
+    <input type="number" id="c1" required>
+
+    <label for="c2">Column Depth (m):</label>
+    <input type="number" id="c2" required>
+
+    <label for="b1">Beam Width (m):</label>
+    <input type="number" id="b1" required>
+
+    <label for="b2">Beam Depth (m):</label>
+    <input type="number" id="b2" required>
+
+    <label for="s">Slab Thickness (m):</label>
+    <input type="number" id="s" required>
+
+    <label for="w">Wall Thickness (m):</label>
+    <input type="number" id="w" required>
+
+    <label for="n2">Number of Beams in X-axis:</label>
+    <input type="number" id="n2" required>
+
+    <label for="n3">Number of Beams in Y-axis:</label>
+    <input type="number" id="n3" required>
+
+    <label for="n1">Number of Columns:</label>
+    <input type="number" id="n1" required>
+
+    <button type="button" onclick="calculateWeights()">Calculate Weights</button>
+</form>
+
+<p id="slabWeight"></p>
+<p id="columnWeight"></p>
+<p id="beamWeight"></p>
+<p id="wallWeight"></p>
+<p id="liveLoadResult"></p>
+<p id="loadEachFloor"></p>
+<p id="loadRoofSlab"></p>
+<p id="totalWeight"></p>
+
+<script>
+    function calculateWeights() {
+        // Get user inputs
+        var numStorey = parseFloat(document.getElementById('numStorey').value);
+        var liveLoad = parseFloat(document.getElementById('liveLoad').value);
+        var d1 = parseFloat(document.getElementById('d1').value);
+        var d2 = parseFloat(document.getElementById('d2').value);
+        var h1 = parseFloat(document.getElementById('h1').value);
+        var l1 = parseFloat(document.getElementById('l1').value);
+        var l2 = parseFloat(document.getElementById('l2').value);
+        var c1 = parseFloat(document.getElementById('c1').value);
+        var c2 = parseFloat(document.getElementById('c2').value);
+        var b1 = parseFloat(document.getElementById('b1').value);
+        var b2 = parseFloat(document.getElementById('b2').value);
+        var s = parseFloat(document.getElementById('s').value);
+        var w = parseFloat(document.getElementById('w').value);
+        var n2 = parseFloat(document.getElementById('n2').value);
+        var n3 = parseFloat(document.getElementById('n3').value);
+        var n1 = parseFloat(document.getElementById('n1').value);
+
+        // Constants
+        var concreteStrength = 25; // kN/m²
+        var masonryStrength = 20; // kN/m²
+
+        // Calculations
+        var slabArea = l1 * l2;
+        var colArea = c1 * c2;
+        var beamWeightX = b1 * (b2 - s) * n2 * l1 * concreteStrength;
+        var beamWeightY = b1 * (b2 - s) * n3 * l2 * concreteStrength;
+        var totalBeamWeight = (beamWeightX + beamWeightY) * 2;
+        var wallWeightX = w * l1 * h1 * masonryStrength;
+        var wallWeightY = w * l2 * h1 * masonryStrength;
+        var totalWallWeight = (wallWeightX + wallWeightY);
+        var liveLoadResult = 0.25 * liveLoad * slabArea;
+
+        var slabWeight = slabArea * concreteStrength * s;
+        var colWeight = colArea * concreteStrength * n1 * h1;
+
+        // Additional Calculations
+        var loadEachFloor = slabWeight + totalBeamWeight + colWeight + totalWallWeight + liveLoadResult;
+        var loadRoofSlab = slabWeight + totalBeamWeight + colWeight / 2 + totalWallWeight / 2;
+        var totalWeight = (loadEachFloor * (numStorey - 1)) + loadRoofSlab;
+
+        // Display the results
+        document.getElementById('slabWeight').innerHTML = "SLAB Weight: " + slabWeight.toFixed(2) + " kN";
+        document.getElementById('columnWeight').innerHTML = "COLUMN Weight: " + colWeight.toFixed(2) + " kN";
+        document.getElementById('beamWeight').innerHTML = "BEAM Weight: " + totalBeamWeight.toFixed(2) + " kN";
+        document.getElementById('wallWeight').innerHTML = "WALL Weight: " + totalWallWeight.toFixed(2) + " kN";
+        document.getElementById('liveLoadResult').innerHTML = "LIVE Load: " + liveLoadResult.toFixed(2) + " kN";
+        document.getElementById('loadEachFloor').innerHTML = "LOAD ON EACH FLOOR: " + loadEachFloor.toFixed(2) + " kN";
+        document.getElementById('loadRoofSlab').innerHTML = "LOAD ON ROOF SLAB: " + loadRoofSlab.toFixed(2) + " kN";
+        document.getElementById('totalWeight').innerHTML = "TOTAL Weight: " + totalWeight.toFixed(2) + " kN";
+    }
+</script>
+
+</body>
+</html>
